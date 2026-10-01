@@ -19,28 +19,28 @@ class ConfusionMatrixPage(QWidget):
         outer = QVBoxLayout(self)
         outer.setContentsMargins(30, 30, 30, 30)
         header = QLabel("Confusion Matrix")
-        header.setFont(QFont("Segoe UI", 28, QFont.Weight.Bold))
-        header.setStyleSheet("color: #00d4ff;")
+        header.setFont(QFont("Segoe UI", 24, QFont.Weight.Bold))
+        header.setStyleSheet("color: #7dd3fc;")
         outer.addWidget(header)
         sub = QLabel("Матрица ошибок на валидационной выборке")
-        sub.setStyleSheet("color: #94a3b8; font-size: 11pt; margin-bottom: 16px;")
+        sub.setStyleSheet("color: #b5c5da; font-size: 11pt; margin-bottom: 16px;")
         outer.addWidget(sub)
         self.btn_compute = QPushButton("🔄  Compute Confusion Matrix")
-        self.btn_compute.setStyleSheet(self._btn_style("#a855f7"))
+        self.btn_compute.setStyleSheet(self._btn_style("#b8a1ef"))
         self.btn_compute.clicked.connect(self._compute_matrix)
         outer.addWidget(self.btn_compute, 0, Qt.AlignmentFlag.AlignLeft)
         self.cm_widget = ConfusionMatrixWidget()
         self.cm_widget.setMinimumHeight(500)
         outer.addWidget(self.cm_widget, 1)
         self.status = QLabel("Нажмите кнопку для вычисления матрицы ошибок.")
-        self.status.setStyleSheet("color: #94a3b8; padding-top: 8px;")
+        self.status.setStyleSheet("color: #b5c5da; padding-top: 8px;")
         outer.addWidget(self.status)
 
     @staticmethod
     def _btn_style(color):
         return f"""
-            QPushButton {{ background-color: {color}20; color: {color}; border: 1px solid {color}80; border-radius: 8px; padding: 8px 16px; font-weight: bold; }}
-            QPushButton:hover {{ background-color: {color}40; }}
+            QPushButton {{ background-color: #35445e; color: {color}; border: 1px solid #35445e; border-radius: 8px; padding: 8px 16px; font-weight: bold; }}
+            QPushButton:hover {{ background-color: #35445e; }}
         """
 
     def set_model(self, model):

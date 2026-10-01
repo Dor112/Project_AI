@@ -9,18 +9,19 @@ class ArchitecturePage(QWidget):
         outer = QVBoxLayout(self)
         outer.setContentsMargins(30, 30, 30, 30)
         header = QLabel("Architecture")
-        header.setFont(QFont("Segoe UI", 28, QFont.Weight.Bold))
-        header.setStyleSheet("color: #00d4ff;")
+        header.setFont(QFont("Segoe UI", 24, QFont.Weight.Bold))
+        header.setStyleSheet("color: #7dd3fc;")
         outer.addWidget(header)
         sub = QLabel("Визуальное представление слоёв Small CNN")
-        sub.setStyleSheet("color: #94a3b8; font-size: 11pt; margin-bottom: 16px;")
+        sub.setStyleSheet("color: #b5c5da; font-size: 11pt; margin-bottom: 16px;")
         outer.addWidget(sub)
         splitter = QSplitter(Qt.Orientation.Horizontal)
         self.network_view = NetworkView()
         splitter.addWidget(self.network_view)
         desc = QFrame()
+        desc.setProperty("panel", True)
         desc.setStyleSheet("""
-            QFrame { background-color: rgba(15, 23, 42, 0.6); border: 1px solid rgba(0, 212, 255, 0.2); border-radius: 12px; }
+            QFrame[panel="true"] { background-color: rgba(25, 35, 55, 0.95); border: 1px solid rgba(125, 211, 252, 0.2); border-radius: 12px; }
         """)
         desc.setMinimumWidth(320)
         desc_layout = QVBoxLayout(desc)
@@ -28,16 +29,16 @@ class ArchitecturePage(QWidget):
         desc_layout.setSpacing(10)
         title = QLabel("Layer Legend")
         title.setFont(QFont("Segoe UI", 14, QFont.Weight.Bold))
-        title.setStyleSheet("color: #a855f7;")
+        title.setStyleSheet("color: #b8a1ef;")
         desc_layout.addWidget(title)
         legend = [
             ("#0ea5e9", "Input", "Входное изображение 1×28×28 (grayscale)"),
-            ("#22d3ee", "Conv2d", "Свёрточный слой (kernel 3×3, padding 1)"),
-            ("#a855f7", "ReLU", "Функция активации"),
-            ("#f472b6", "MaxPool", "Понижение пространственного разрешения в 2 раза"),
-            ("#94a3b8", "Flatten", "Превращение тензора в вектор"),
-            ("#f59e0b", "Linear", "Полносвязный слой"),
-            ("#10b981", "Output", "Выход: 10 классов Fashion-MNIST"),
+            ("#67c9dc", "Conv2d", "Свёрточный слой (kernel 3×3, padding 1)"),
+            ("#b8a1ef", "ReLU", "Функция активации"),
+            ("#e5a0bd", "MaxPool", "Понижение пространственного разрешения в 2 раза"),
+            ("#b5c5da", "Flatten", "Превращение тензора в вектор"),
+            ("#e9bd75", "Linear", "Полносвязный слой"),
+            ("#7ad9b1", "Output", "Выход: 10 классов Fashion-MNIST"),
         ]
         for color, name, description in legend:
             row = QWidget()
@@ -59,7 +60,7 @@ class ArchitecturePage(QWidget):
             head_layout.addStretch()
             row_layout.addWidget(head)
             lbl_desc = QLabel(description)
-            lbl_desc.setStyleSheet("color: #94a3b8; font-size: 10pt; padding-left: 22px;")
+            lbl_desc.setStyleSheet("color: #b5c5da; font-size: 10pt; padding-left: 22px;")
             lbl_desc.setWordWrap(True)
             row_layout.addWidget(lbl_desc)
             desc_layout.addWidget(row)
