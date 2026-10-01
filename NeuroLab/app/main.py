@@ -8,7 +8,7 @@ if str(PROJECT_ROOT) not in sys.path:
 
 os.environ.setdefault("OMP_NUM_THREADS", "4")
 os.environ.setdefault("MKL_NUM_THREADS", "4")
-
+"df"
 def main():
     from PySide6.QtWidgets import QApplication
     from PySide6.QtGui import QFont

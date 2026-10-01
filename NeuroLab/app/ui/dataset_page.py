@@ -23,37 +23,37 @@ class DatasetPage(QWidget):
         outer = QVBoxLayout(self)
         outer.setContentsMargins(30, 30, 30, 30)
         header = QLabel("Dataset Viewer")
-        header.setFont(QFont("Segoe UI", 28, QFont.Weight.Bold))
-        header.setStyleSheet("color: #00d4ff;")
+        header.setFont(QFont("Segoe UI", 24, QFont.Weight.Bold))
+        header.setStyleSheet("color: #7dd3fc;")
         outer.addWidget(header)
         sub = QLabel("Просмотр обучающей выборки Fashion-MNIST")
-        sub.setStyleSheet("color: #94a3b8; font-size: 11pt; margin-bottom: 16px;")
+        sub.setStyleSheet("color: #b5c5da; font-size: 11pt; margin-bottom: 16px;")
         outer.addWidget(sub)
         controls = QHBoxLayout()
         self.btn_load = QPushButton("⬇  Load / Download Fashion-MNIST")
-        self.btn_load.setStyleSheet(self._btn_style("#00d4ff"))
+        self.btn_load.setStyleSheet(self._btn_style("#7dd3fc"))
         self.btn_load.clicked.connect(self._load_dataset)
         controls.addWidget(self.btn_load)
         self.btn_prev = QPushButton("◀  Prev")
-        self.btn_prev.setStyleSheet(self._btn_style("#a855f7"))
+        self.btn_prev.setStyleSheet(self._btn_style("#b8a1ef"))
         self.btn_prev.clicked.connect(self._prev_page)
         controls.addWidget(self.btn_prev)
         self.lbl_page = QLabel("Page 0 / 0")
-        self.lbl_page.setStyleSheet("color: #cdd6f4; font-size: 11pt; padding: 0 12px;")
+        self.lbl_page.setStyleSheet("color: #e2e8f0; font-size: 11pt; padding: 0 12px;")
         controls.addWidget(self.lbl_page)
         self.btn_next = QPushButton("Next  ▶")
-        self.btn_next.setStyleSheet(self._btn_style("#a855f7"))
+        self.btn_next.setStyleSheet(self._btn_style("#b8a1ef"))
         self.btn_next.clicked.connect(self._next_page)
         controls.addWidget(self.btn_next)
         controls.addStretch()
         lbl_size = QLabel("Samples per page:")
-        lbl_size.setStyleSheet("color: #94a3b8;")
+        lbl_size.setStyleSheet("color: #b5c5da;")
         controls.addWidget(lbl_size)
         self.spin_size = QSpinBox()
         self.spin_size.setRange(12, 240)
         self.spin_size.setSingleStep(12)
         self.spin_size.setValue(self.page_size)
-        self.spin_size.setStyleSheet("color: #cdd6f4; background: #111827; padding: 4px 8px; border-radius: 6px;")
+        self.spin_size.setStyleSheet("color: #e2e8f0; background: #1a2436; padding: 4px 8px; border-radius: 6px;")
         self.spin_size.valueChanged.connect(self._on_size_changed)
         controls.addWidget(self.spin_size)
         outer.addLayout(controls)
@@ -67,14 +67,14 @@ class DatasetPage(QWidget):
         self.scroll.setWidget(self.grid_container)
         outer.addWidget(self.scroll, 1)
         self.status = QLabel("Датасет не загружен. Нажмите «Load / Download Fashion-MNIST».")
-        self.status.setStyleSheet("color: #94a3b8; padding-top: 8px;")
+        self.status.setStyleSheet("color: #b5c5da; padding-top: 8px;")
         outer.addWidget(self.status)
 
     @staticmethod
     def _btn_style(color):
         return f"""
-            QPushButton {{ background-color: {color}20; color: {color}; border: 1px solid {color}80; border-radius: 8px; padding: 8px 16px; font-weight: bold; }}
-            QPushButton:hover {{ background-color: {color}40; }}
+            QPushButton {{ background-color: #35445e; color: {color}; border: 1px solid #35445e; border-radius: 8px; padding: 8px 16px; font-weight: bold; }}
+            QPushButton:hover {{ background-color: #35445e; }}
         """
 
     def _load_dataset(self):
@@ -124,9 +124,10 @@ class DatasetPage(QWidget):
             img_tensor, label = self.dataset[real_idx]
             img_arr = (img_tensor.squeeze().numpy() * 127.5 + 127.5).astype(np.uint8)
             frame = QFrame()
+            frame.setProperty("panel", True)
             frame.setStyleSheet("""
-                QFrame { background-color: #111827; border: 1px solid #1f2937; border-radius: 8px; }
-                QFrame:hover { border: 1px solid #00d4ff; }
+                QFrame[panel="true"] { background-color: #1a2436; border: 1px solid #35445e; border-radius: 8px; }
+                QFrame[panel="true"]:hover { border: 1px solid #7dd3fc; }
             """)
             frame.setFixedSize(110, 140)
             layout = QVBoxLayout(frame)
@@ -140,11 +141,11 @@ class DatasetPage(QWidget):
             layout.addWidget(lbl_img, 0, Qt.AlignmentFlag.AlignHCenter)
             lbl_class = QLabel(FASHION_MNIST_CLASSES[label])
             lbl_class.setAlignment(Qt.AlignmentFlag.AlignCenter)
-            lbl_class.setStyleSheet("color: #00d4ff; font-size: 9pt; font-weight: bold;")
+            lbl_class.setStyleSheet("color: #7dd3fc; font-size: 9pt; font-weight: bold;")
             layout.addWidget(lbl_class)
             lbl_idx = QLabel(f"#{real_idx}")
             lbl_idx.setAlignment(Qt.AlignmentFlag.AlignCenter)
-            lbl_idx.setStyleSheet("color: #64748b; font-size: 8pt;")
+            lbl_idx.setStyleSheet("color: #92a3ba; font-size: 8pt;")
             layout.addWidget(lbl_idx)
             self.grid_layout.addWidget(frame, idx // cols, idx % cols)
         total_pages = max(1, (len(self.dataset) + self.page_size - 1) // self.page_size)

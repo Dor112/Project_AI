@@ -35,19 +35,19 @@ class FeatureMapsPage(QWidget):
         outer = QVBoxLayout(self)
         outer.setContentsMargins(30, 30, 30, 30)
         header = QLabel("Feature Maps")
-        header.setFont(QFont("Segoe UI", 28, QFont.Weight.Bold))
-        header.setStyleSheet("color: #00d4ff;")
+        header.setFont(QFont("Segoe UI", 24, QFont.Weight.Bold))
+        header.setStyleSheet("color: #7dd3fc;")
         outer.addWidget(header)
         sub = QLabel("Активации промежуточных свёрточных слоёв")
-        sub.setStyleSheet("color: #94a3b8; font-size: 11pt; margin-bottom: 16px;")
+        sub.setStyleSheet("color: #b5c5da; font-size: 11pt; margin-bottom: 16px;")
         outer.addWidget(sub)
         ctrl = QHBoxLayout()
         self.btn_load_img = QPushButton("📁  Load Image")
-        self.btn_load_img.setStyleSheet(self._btn_style("#00d4ff"))
+        self.btn_load_img.setStyleSheet(self._btn_style("#7dd3fc"))
         self.btn_load_img.clicked.connect(self._load_image)
         ctrl.addWidget(self.btn_load_img)
         self.btn_sample = QPushButton("🎲  Random Sample from Fashion-MNIST")
-        self.btn_sample.setStyleSheet(self._btn_style("#a855f7"))
+        self.btn_sample.setStyleSheet(self._btn_style("#b8a1ef"))
         self.btn_sample.clicked.connect(self._random_sample)
         ctrl.addWidget(self.btn_sample)
         ctrl.addStretch()
@@ -56,12 +56,12 @@ class FeatureMapsPage(QWidget):
         self.input_lbl.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.input_lbl.setFixedSize(224, 224)
         self.input_lbl.setStyleSheet("""
-            QLabel { background: #111827; border: 1px solid #1f2937; border-radius: 12px; color: #64748b; }
+            QLabel { background: #1a2436; border: 1px solid #35445e; border-radius: 12px; color: #92a3ba; }
         """)
         outer.addWidget(self.input_lbl, 0, Qt.AlignmentFlag.AlignHCenter)
         self.pred_lbl = QLabel("")
         self.pred_lbl.setAlignment(Qt.AlignmentFlag.AlignCenter)
-        self.pred_lbl.setStyleSheet("color: #00d4ff; font-size: 12pt; font-weight: bold;")
+        self.pred_lbl.setStyleSheet("color: #7dd3fc; font-size: 12pt; font-weight: bold;")
         outer.addWidget(self.pred_lbl)
         self.scroll = QScrollArea()
         self.scroll.setWidgetResizable(True)
@@ -76,8 +76,8 @@ class FeatureMapsPage(QWidget):
     @staticmethod
     def _btn_style(color):
         return f"""
-            QPushButton {{ background-color: {color}20; color: {color}; border: 1px solid {color}80; border-radius: 8px; padding: 8px 16px; font-weight: bold; }}
-            QPushButton:hover {{ background-color: {color}40; }}
+            QPushButton {{ background-color: #35445e; color: {color}; border: 1px solid #35445e; border-radius: 8px; padding: 8px 16px; font-weight: bold; }}
+            QPushButton:hover {{ background-color: #35445e; }}
         """
 
     def set_model(self, model):
@@ -140,13 +140,14 @@ class FeatureMapsPage(QWidget):
                 w.deleteLater()
         for name, grid in maps.items():
             frame = QFrame()
+            frame.setProperty("panel", True)
             frame.setStyleSheet("""
-                QFrame { background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(0, 212, 255, 0.2); border-radius: 12px; }
+                QFrame[panel="true"] { background: rgba(25, 35, 55, 0.95); border: 1px solid rgba(125, 211, 252, 0.2); border-radius: 12px; }
             """)
             lay = QVBoxLayout(frame)
             lay.setContentsMargins(16, 12, 16, 12)
             title = QLabel(f"Layer: {name}   (channels grid)")
-            title.setStyleSheet("color: #a855f7; font-size: 12pt; font-weight: bold;")
+            title.setStyleSheet("color: #b8a1ef; font-size: 12pt; font-weight: bold;")
             lay.addWidget(title)
             lbl = QLabel()
             lbl.setAlignment(Qt.AlignmentFlag.AlignCenter)
@@ -155,7 +156,7 @@ class FeatureMapsPage(QWidget):
             lbl.setPixmap(pix)
             lay.addWidget(lbl, 0, Qt.AlignmentFlag.AlignHCenter)
             info = QLabel(f"Grid shape: {grid.shape[1]}×{grid.shape[0]} px")
-            info.setStyleSheet("color: #94a3b8; font-size: 10pt;")
+            info.setStyleSheet("color: #b5c5da; font-size: 10pt;")
             info.setAlignment(Qt.AlignmentFlag.AlignCenter)
             lay.addWidget(info)
             self.vlayout.addWidget(frame)

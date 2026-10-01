@@ -7,9 +7,10 @@ from app.ml.cnn import SmallCNN
 class StatCard(QFrame):
     def __init__(self, title, value, accent, parent=None):
         super().__init__(parent)
+        self.setProperty("panel", True)
         self.setStyleSheet(f"""
-            QFrame {{ background-color: qlineargradient(x1:0, y1:0, x2:1, y2:1, stop:0 rgba(15,23,42,0.9), stop:1 rgba(10,14,26,0.9)); border: 1px solid {accent}40; border-radius: 14px; }}
-            QFrame:hover {{ border: 1px solid {accent}aa; }}
+            QFrame[panel="true"] {{ background-color: qlineargradient(x1:0, y1:0, x2:1, y2:1, stop:0 rgba(25,35,55,0.95), stop:1 rgba(25,35,55,0.95)); border: 1px solid #35445e; border-radius: 14px; }}
+            QFrame[panel="true"]:hover {{ border: 1px solid #35445e; }}
         """)
         self.setMinimumHeight(130)
         layout = QVBoxLayout(self)
@@ -35,28 +36,29 @@ class DashboardPage(QWidget):
         outer = QVBoxLayout(self)
         outer.setContentsMargins(30, 30, 30, 30)
         header = QLabel("Dashboard")
-        header.setFont(QFont("Segoe UI", 28, QFont.Weight.Bold))
-        header.setStyleSheet("color: #00d4ff;")
+        header.setFont(QFont("Segoe UI", 24, QFont.Weight.Bold))
+        header.setStyleSheet("color: #7dd3fc;")
         outer.addWidget(header)
         sub = QLabel("Обзор проекта NeuroLab и текущее состояние модели")
-        sub.setStyleSheet("color: #94a3b8; font-size: 11pt; margin-bottom: 20px;")
+        sub.setStyleSheet("color: #b5c5da; font-size: 11pt; margin-bottom: 20px;")
         outer.addWidget(sub)
         grid = QGridLayout()
         grid.setSpacing(16)
         outer.addLayout(grid)
-        self.card_model = StatCard("Model", "Small CNN", "#00d4ff")
-        self.card_params = StatCard("Parameters", f"{self.num_params:,}", "#a855f7")
-        self.card_device = StatCard("Device", str(self.device), "#22d3ee")
-        self.card_classes = StatCard("Classes", "10 (Fashion-MNIST)", "#f472b6")
-        self.card_layers = StatCard("Conv Layers", "2 blocks", "#f59e0b")
-        self.card_status = StatCard("Status", "Ready", "#10b981")
+        self.card_model = StatCard("Model", "Small CNN", "#7dd3fc")
+        self.card_params = StatCard("Parameters", f"{self.num_params:,}", "#b8a1ef")
+        self.card_device = StatCard("Device", str(self.device), "#67c9dc")
+        self.card_classes = StatCard("Classes", "10 (Fashion-MNIST)", "#e5a0bd")
+        self.card_layers = StatCard("Conv Layers", "2 blocks", "#e9bd75")
+        self.card_status = StatCard("Status", "Ready", "#7ad9b1")
         cards = [self.card_model, self.card_params, self.card_device, self.card_classes, self.card_layers, self.card_status]
         for i, card in enumerate(cards):
             grid.addWidget(card, i // 3, i % 3)
         outer.addStretch()
         info = QFrame()
+        info.setProperty("panel", True)
         info.setStyleSheet("""
-            QFrame { background-color: rgba(0, 212, 255, 0.05); border: 1px solid rgba(0, 212, 255, 0.25); border-radius: 14px; padding: 16px; }
+            QFrame[panel="true"] { background-color: rgba(125, 211, 252, 0.05); border: 1px solid rgba(125, 211, 252, 0.25); border-radius: 14px; padding: 16px; }
         """)
         info_layout = QVBoxLayout(info)
         info_layout.setSpacing(6)
@@ -70,7 +72,7 @@ class DashboardPage(QWidget):
             row = QHBoxLayout()
             t = QLabel(title)
             t.setFont(QFont("Segoe UI", 11, QFont.Weight.Bold))
-            t.setStyleSheet("color: #00d4ff;")
+            t.setStyleSheet("color: #7dd3fc;")
             t.setFixedWidth(140)
             d = QLabel(text)
             d.setStyleSheet("color: #cbd5e1; font-size: 11pt;")

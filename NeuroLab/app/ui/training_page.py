@@ -87,15 +87,16 @@ class TrainingPage(QWidget):
         outer = QVBoxLayout(self)
         outer.setContentsMargins(30, 30, 30, 30)
         header = QLabel("Training")
-        header.setFont(QFont("Segoe UI", 28, QFont.Weight.Bold))
-        header.setStyleSheet("color: #00d4ff;")
+        header.setFont(QFont("Segoe UI", 24, QFont.Weight.Bold))
+        header.setStyleSheet("color: #7dd3fc;")
         outer.addWidget(header)
         sub = QLabel("Настоящее обучение CNN на Fashion-MNIST с визуализацией метрик")
-        sub.setStyleSheet("color: #94a3b8; font-size: 11pt; margin-bottom: 16px;")
+        sub.setStyleSheet("color: #b5c5da; font-size: 11pt; margin-bottom: 16px;")
         outer.addWidget(sub)
         ctrl_frame = QFrame()
+        ctrl_frame.setProperty("panel", True)
         ctrl_frame.setStyleSheet("""
-            QFrame { background-color: rgba(15, 23, 42, 0.6); border: 1px solid rgba(0, 212, 255, 0.2); border-radius: 12px; }
+            QFrame[panel="true"] { background-color: rgba(25, 35, 55, 0.95); border: 1px solid rgba(125, 211, 252, 0.2); border-radius: 12px; }
         """)
         ctrl_layout = QGridLayout(ctrl_frame)
         ctrl_layout.setContentsMargins(20, 20, 20, 20)
@@ -127,21 +128,21 @@ class TrainingPage(QWidget):
         ctrl_layout.addWidget(self._labeled("Learning rate", self.spin_lr), 0, 3)
         btn_row = QHBoxLayout()
         self.btn_start = QPushButton("▶  Start Training")
-        self.btn_start.setStyleSheet(self._btn_style("#10b981"))
+        self.btn_start.setStyleSheet(self._btn_style("#7ad9b1"))
         self.btn_start.clicked.connect(self._start_training)
         btn_row.addWidget(self.btn_start)
         self.btn_pause = QPushButton("⏸  Pause")
-        self.btn_pause.setStyleSheet(self._btn_style("#f59e0b"))
+        self.btn_pause.setStyleSheet(self._btn_style("#e9bd75"))
         self.btn_pause.setEnabled(False)
         self.btn_pause.clicked.connect(self._toggle_pause)
         btn_row.addWidget(self.btn_pause)
         self.btn_stop = QPushButton("■  Stop")
-        self.btn_stop.setStyleSheet(self._btn_style("#ef4444"))
+        self.btn_stop.setStyleSheet(self._btn_style("#ed9292"))
         self.btn_stop.setEnabled(False)
         self.btn_stop.clicked.connect(self._stop_training)
         btn_row.addWidget(self.btn_stop)
         self.btn_reset = QPushButton("↻  Reset Model")
-        self.btn_reset.setStyleSheet(self._btn_style("#a855f7"))
+        self.btn_reset.setStyleSheet(self._btn_style("#b8a1ef"))
         self.btn_reset.clicked.connect(self._reset_model)
         btn_row.addWidget(self.btn_reset)
         ctrl_layout.addLayout(btn_row, 1, 0, 1, 4)
@@ -151,8 +152,8 @@ class TrainingPage(QWidget):
         self.progress.setValue(0)
         self.progress.setTextVisible(True)
         self.progress.setStyleSheet("""
-            QProgressBar { background: #111827; border: 1px solid #1f2937; border-radius: 8px; text-align: center; color: #cdd6f4; height: 24px; }
-            QProgressBar::chunk { background: qlineargradient(x1:0, y1:0, x2:1, y2:0, stop:0 #00d4ff, stop:1 #a855f7); border-radius: 7px; }
+            QProgressBar { background: #1a2436; border: 1px solid #35445e; border-radius: 8px; text-align: center; color: #e2e8f0; height: 24px; }
+            QProgressBar::chunk { background: qlineargradient(x1:0, y1:0, x2:1, y2:0, stop:0 #7dd3fc, stop:1 #b8a1ef); border-radius: 7px; }
         """)
         outer.addWidget(self.progress)
         metrics = QHBoxLayout()
@@ -174,36 +175,36 @@ class TrainingPage(QWidget):
         charts_row.addWidget(self.acc_chart, 1)
         outer.addLayout(charts_row, 1)
         cm_label = QLabel("Confusion Matrix (validation, last epoch)")
-        cm_label.setStyleSheet("color: #a855f7; font-size: 12pt; font-weight: bold; margin-top: 8px;")
+        cm_label.setStyleSheet("color: #b8a1ef; font-size: 12pt; font-weight: bold; margin-top: 8px;")
         outer.addWidget(cm_label)
         self.cm_widget = ConfusionMatrixWidget()
         self.cm_widget.setMinimumHeight(320)
         outer.addWidget(self.cm_widget, 1)
         self.status = QLabel("Готов к обучению.")
-        self.status.setStyleSheet("color: #94a3b8; padding-top: 6px;")
+        self.status.setStyleSheet("color: #b5c5da; padding-top: 6px;")
         outer.addWidget(self.status)
         self._on_mode_changed(0)
 
     @staticmethod
     def _spin_style():
         return """
-            QSpinBox, QDoubleSpinBox { background: #111827; color: #cdd6f4; border: 1px solid #1f2937; border-radius: 6px; padding: 4px 8px; min-width: 100px; }
-            QSpinBox:hover, QDoubleSpinBox:hover { border: 1px solid #00d4ff; }
+            QSpinBox, QDoubleSpinBox { background: #1a2436; color: #e2e8f0; border: 1px solid #35445e; border-radius: 6px; padding: 4px 8px; min-width: 100px; }
+            QSpinBox:hover, QDoubleSpinBox:hover { border: 1px solid #7dd3fc; }
         """
 
     @staticmethod
     def _combo_style():
         return """
-            QComboBox { background: #111827; color: #cdd6f4; border: 1px solid #1f2937; border-radius: 6px; padding: 4px 8px; min-width: 120px; }
-            QComboBox:hover { border: 1px solid #00d4ff; }
+            QComboBox { background: #1a2436; color: #e2e8f0; border: 1px solid #35445e; border-radius: 6px; padding: 4px 8px; min-width: 120px; }
+            QComboBox:hover { border: 1px solid #7dd3fc; }
             QComboBox::drop-down { border: none; }
         """
 
     @staticmethod
     def _btn_style(color):
         return f"""
-            QPushButton {{ background-color: {color}20; color: {color}; border: 1px solid {color}80; border-radius: 8px; padding: 8px 16px; font-weight: bold; }}
-            QPushButton:hover {{ background-color: {color}40; }}
+            QPushButton {{ background-color: #35445e; color: {color}; border: 1px solid #35445e; border-radius: 8px; padding: 8px 16px; font-weight: bold; }}
+            QPushButton:hover {{ background-color: #35445e; }}
             QPushButton:disabled {{ color: #475569; border: 1px solid #334155; background: transparent; }}
         """
 
@@ -214,7 +215,7 @@ class TrainingPage(QWidget):
         lay.setContentsMargins(0, 0, 0, 0)
         lay.setSpacing(4)
         lbl = QLabel(text)
-        lbl.setStyleSheet("color: #94a3b8; font-size: 10pt;")
+        lbl.setStyleSheet("color: #b5c5da; font-size: 10pt;")
         lay.addWidget(lbl)
         lay.addWidget(widget)
         return w
@@ -222,13 +223,14 @@ class TrainingPage(QWidget):
     @staticmethod
     def _metric(title, value):
         f = QFrame()
+        f.setProperty("panel", True)
         f.setStyleSheet("""
-            QFrame { background: rgba(0, 212, 255, 0.05); border: 1px solid rgba(0, 212, 255, 0.2); border-radius: 10px; }
+            QFrame[panel="true"] { background: rgba(125, 211, 252, 0.05); border: 1px solid rgba(125, 211, 252, 0.2); border-radius: 10px; }
         """)
         lay = QVBoxLayout(f)
         lay.setContentsMargins(12, 8, 12, 8)
         t = QLabel(title.upper())
-        t.setStyleSheet("color: #00d4ff; font-size: 9pt; letter-spacing: 1px;")
+        t.setStyleSheet("color: #7dd3fc; font-size: 9pt; letter-spacing: 1px;")
         lay.addWidget(t)
         v = QLabel(value)
         v.setFont(QFont("Segoe UI", 14, QFont.Weight.Bold))
