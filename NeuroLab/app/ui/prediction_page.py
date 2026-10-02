@@ -25,19 +25,19 @@ class PredictionPage(QWidget):
         outer = QVBoxLayout(self)
         outer.setContentsMargins(30, 30, 30, 30)
         header = QLabel("Prediction")
-        header.setFont(QFont("Segoe UI", 28, QFont.Weight.Bold))
-        header.setStyleSheet("color: #00d4ff;")
+        header.setFont(QFont("Segoe UI", 24, QFont.Weight.Bold))
+        header.setStyleSheet("color: #7dd3fc;")
         outer.addWidget(header)
         sub = QLabel("Загрузите изображение — модель предскажет класс Fashion-MNIST")
-        sub.setStyleSheet("color: #94a3b8; font-size: 11pt; margin-bottom: 16px;")
+        sub.setStyleSheet("color: #b5c5da; font-size: 11pt; margin-bottom: 16px;")
         outer.addWidget(sub)
         ctrl = QHBoxLayout()
         self.btn_load = QPushButton("📁  Load Image")
-        self.btn_load.setStyleSheet(self._btn_style("#00d4ff"))
+        self.btn_load.setStyleSheet(self._btn_style("#7dd3fc"))
         self.btn_load.clicked.connect(self._load_image)
         ctrl.addWidget(self.btn_load)
         self.btn_demo = QPushButton("🎲  Demo (random noise 28×28)")
-        self.btn_demo.setStyleSheet(self._btn_style("#a855f7"))
+        self.btn_demo.setStyleSheet(self._btn_style("#b8a1ef"))
         self.btn_demo.clicked.connect(self._demo_noise)
         ctrl.addWidget(self.btn_demo)
         ctrl.addStretch()
@@ -48,36 +48,37 @@ class PredictionPage(QWidget):
         self.img_lbl.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.img_lbl.setFixedSize(360, 360)
         self.img_lbl.setStyleSheet("""
-            QLabel { background: #111827; border: 1px solid #1f2937; border-radius: 16px; color: #64748b; font-size: 12pt; }
+            QLabel { background: #1a2436; border: 1px solid #35445e; border-radius: 16px; color: #92a3ba; font-size: 12pt; }
         """)
         left.addWidget(self.img_lbl, 0, Qt.AlignmentFlag.AlignHCenter)
         left.addSpacing(10)
         self.file_lbl = QLabel("")
-        self.file_lbl.setStyleSheet("color: #94a3b8; font-size: 10pt;")
+        self.file_lbl.setStyleSheet("color: #b5c5da; font-size: 10pt;")
         self.file_lbl.setAlignment(Qt.AlignmentFlag.AlignCenter)
         left.addWidget(self.file_lbl)
         left.addStretch()
         body.addLayout(left, 1)
         right = QVBoxLayout()
         self.result_frame = QFrame()
+        self.result_frame.setProperty("panel", True)
         self.result_frame.setStyleSheet("""
-            QFrame { background: qlineargradient(x1:0, y1:0, x2:1, y2:1, stop:0 rgba(0,212,255,0.1), stop:1 rgba(168,85,247,0.1)); border: 1px solid rgba(0, 212, 255, 0.3); border-radius: 16px; }
+            QFrame[panel="true"] { background: qlineargradient(x1:0, y1:0, x2:1, y2:1, stop:0 rgba(125,211,252,0.1), stop:1 rgba(184,161,239,0.1)); border: 1px solid rgba(125, 211, 252, 0.3); border-radius: 16px; }
         """)
         result_layout = QVBoxLayout(self.result_frame)
         result_layout.setContentsMargins(24, 24, 24, 24)
         title = QLabel("PREDICTION")
-        title.setStyleSheet("color: #00d4ff; font-size: 11pt; letter-spacing: 2px;")
+        title.setStyleSheet("color: #7dd3fc; font-size: 11pt; letter-spacing: 2px;")
         result_layout.addWidget(title)
         self.class_lbl = QLabel("—")
         self.class_lbl.setFont(QFont("Segoe UI", 34, QFont.Weight.Bold))
         self.class_lbl.setStyleSheet("color: #e2e8f0;")
         result_layout.addWidget(self.class_lbl)
         self.prob_lbl = QLabel("")
-        self.prob_lbl.setStyleSheet("color: #94a3b8; font-size: 12pt;")
+        self.prob_lbl.setStyleSheet("color: #b5c5da; font-size: 12pt;")
         result_layout.addWidget(self.prob_lbl)
         right.addWidget(self.result_frame)
         topk_title = QLabel("TOP-5 PROBABILITIES")
-        topk_title.setStyleSheet("color: #a855f7; font-size: 11pt; letter-spacing: 2px; margin-top: 10px;")
+        topk_title.setStyleSheet("color: #b8a1ef; font-size: 11pt; letter-spacing: 2px; margin-top: 10px;")
         right.addWidget(topk_title)
         self.bars_widget = QWidget()
         self.bars_layout = QVBoxLayout(self.bars_widget)
@@ -91,8 +92,8 @@ class PredictionPage(QWidget):
     @staticmethod
     def _btn_style(color):
         return f"""
-            QPushButton {{ background-color: {color}20; color: {color}; border: 1px solid {color}80; border-radius: 8px; padding: 8px 16px; font-weight: bold; }}
-            QPushButton:hover {{ background-color: {color}40; }}
+            QPushButton {{ background-color: #35445e; color: {color}; border: 1px solid #35445e; border-radius: 8px; padding: 8px 16px; font-weight: bold; }}
+            QPushButton:hover {{ background-color: #35445e; }}
         """
 
     def set_model(self, model):
@@ -141,7 +142,7 @@ class PredictionPage(QWidget):
             if w is not None:
                 w.deleteLater()
         max_prob = max((p for _, p in ranking), default=1.0)
-        colors = ["#00d4ff", "#22d3ee", "#a855f7", "#f472b6", "#f59e0b"]
+        colors = ["#7dd3fc", "#67c9dc", "#b8a1ef", "#e5a0bd", "#e9bd75"]
         for i, (cls, prob) in enumerate(ranking):
             row = QWidget()
             row_layout = QHBoxLayout(row)
@@ -157,7 +158,7 @@ class PredictionPage(QWidget):
             bar.setTextVisible(False)
             color = colors[i % len(colors)]
             bar.setStyleSheet(f"""
-                QProgressBar {{ background: #111827; border: 1px solid #1f2937; border-radius: 6px; height: 14px; }}
+                QProgressBar {{ background: #1a2436; border: 1px solid #35445e; border-radius: 6px; height: 14px; }}
                 QProgressBar::chunk {{ background: {color}; border-radius: 5px; }}
             """)
             row_layout.addWidget(bar, 1)

@@ -4,18 +4,18 @@ import pyqtgraph as pg
 from PySide6.QtCore import Qt
 
 def apply_dark_theme():
-    pg.setConfigOptions(antialias=True, background="#0a0e1a", foreground="#cdd6f4")
+    pg.setConfigOptions(antialias=True, background="#101522", foreground="#e2e8f0")
 
 class LossChart(pg.PlotWidget):
     def __init__(self, parent=None):
         super().__init__(parent)
-        self.setTitle("Loss", color="#cdd6f4", size="11pt")
+        self.setTitle("Loss", color="#e2e8f0", size="11pt")
         self.setLabel("bottom", "Epoch")
         self.setLabel("left", "Loss")
         self.showGrid(x=True, y=True, alpha=0.15)
         self.addLegend(offset=(10, 10))
-        pen_train = pg.mkPen(color="#00d4ff", width=2)
-        pen_val = pg.mkPen(color="#f472b6", width=2)
+        pen_train = pg.mkPen(color="#7dd3fc", width=2)
+        pen_val = pg.mkPen(color="#e5a0bd", width=2)
         self.train_curve = self.plot([], [], pen=pen_train, name="Train")
         self.val_curve = self.plot([], [], pen=pen_val, name="Val")
 
@@ -30,13 +30,13 @@ class LossChart(pg.PlotWidget):
 class AccuracyChart(pg.PlotWidget):
     def __init__(self, parent=None):
         super().__init__(parent)
-        self.setTitle("Accuracy, %", color="#cdd6f4", size="11pt")
+        self.setTitle("Accuracy, %", color="#e2e8f0", size="11pt")
         self.setLabel("bottom", "Epoch")
         self.setLabel("left", "Accuracy")
         self.showGrid(x=True, y=True, alpha=0.15)
         self.addLegend(offset=(10, 10))
-        pen_train = pg.mkPen(color="#22d3ee", width=2)
-        pen_val = pg.mkPen(color="#a855f7", width=2)
+        pen_train = pg.mkPen(color="#67c9dc", width=2)
+        pen_val = pg.mkPen(color="#b8a1ef", width=2)
         self.train_curve = self.plot([], [], pen=pen_train, name="Train")
         self.val_curve = self.plot([], [], pen=pen_val, name="Val")
 
@@ -77,18 +77,18 @@ class ConfusionMatrixWidget(pg.GraphicsLayoutWidget):
         self.image_item.setRect(0, 0, n, n)
         self.view.setRange(xRange=(0, n), yRange=(0, n))
         for i, lab in enumerate(labels):
-            t_bottom = pg.TextItem(lab, color="#cdd6f4", anchor=(1, 0.5))
+            t_bottom = pg.TextItem(lab, color="#e2e8f0", anchor=(1, 0.5))
             t_bottom.setPos(i + 0.5, n + 0.2)
             self.view.addItem(t_bottom)
             self.text_items.append(t_bottom)
-            t_left = pg.TextItem(lab, color="#cdd6f4", anchor=(1, 0.5))
+            t_left = pg.TextItem(lab, color="#e2e8f0", anchor=(1, 0.5))
             t_left.setPos(-0.2, i + 0.5)
             self.view.addItem(t_left)
             self.text_items.append(t_left)
         for i in range(n):
             for j in range(n):
                 val = float(matrix[i, j])
-                txt = pg.TextItem(str(int(val)) if val >= 1 else "", color="#0a0e1a", anchor=(0.5, 0.5))
+                txt = pg.TextItem(str(int(val)) if val >= 1 else "", color="#101522", anchor=(0.5, 0.5))
                 txt.setPos(j + 0.5, i + 0.5)
                 self.view.addItem(txt)
                 self.text_items.append(txt)

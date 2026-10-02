@@ -13,17 +13,17 @@ class LayerInfo:
 def build_architecture_layers():
     return [
         LayerInfo("Input", "input", "1×28×28", "#0ea5e9"),
-        LayerInfo("Conv2d", "conv", "16×28×28", "#22d3ee"),
-        LayerInfo("ReLU", "act", "16×28×28", "#a855f7"),
-        LayerInfo("MaxPool", "pool", "16×14×14", "#f472b6"),
-        LayerInfo("Conv2d", "conv", "32×14×14", "#22d3ee"),
-        LayerInfo("ReLU", "act", "32×14×14", "#a855f7"),
-        LayerInfo("MaxPool", "pool", "32×7×7", "#f472b6"),
-        LayerInfo("Flatten", "flat", "1568", "#94a3b8"),
-        LayerInfo("Linear", "fc", "128", "#f59e0b"),
-        LayerInfo("ReLU", "act", "128", "#a855f7"),
-        LayerInfo("Linear", "fc", "10", "#f59e0b"),
-        LayerInfo("Output", "output", "10", "#10b981"),
+        LayerInfo("Conv2d", "conv", "16×28×28", "#67c9dc"),
+        LayerInfo("ReLU", "act", "16×28×28", "#b8a1ef"),
+        LayerInfo("MaxPool", "pool", "16×14×14", "#e5a0bd"),
+        LayerInfo("Conv2d", "conv", "32×14×14", "#67c9dc"),
+        LayerInfo("ReLU", "act", "32×14×14", "#b8a1ef"),
+        LayerInfo("MaxPool", "pool", "32×7×7", "#e5a0bd"),
+        LayerInfo("Flatten", "flat", "1568", "#b5c5da"),
+        LayerInfo("Linear", "fc", "128", "#e9bd75"),
+        LayerInfo("ReLU", "act", "128", "#b8a1ef"),
+        LayerInfo("Linear", "fc", "10", "#e9bd75"),
+        LayerInfo("Output", "output", "10", "#7ad9b1"),
     ]
 
 class NetworkView(QWidget):
@@ -31,7 +31,7 @@ class NetworkView(QWidget):
         super().__init__(parent)
         self.layers = build_architecture_layers()
         self.setMinimumSize(600, 600)
-        self.setStyleSheet("background-color: #0a0e1a;")
+        self.setStyleSheet("background-color: #101522;")
 
     def paintEvent(self, event):
         painter = QPainter(self)
@@ -39,10 +39,10 @@ class NetworkView(QWidget):
         w = self.width()
         h = self.height()
         bg = QLinearGradient(0, 0, 0, h)
-        bg.setColorAt(0, QColor("#0a0e1a"))
-        bg.setColorAt(1, QColor("#0f172a"))
+        bg.setColorAt(0, QColor("#101522"))
+        bg.setColorAt(1, QColor("#192337"))
         painter.fillRect(self.rect(), bg)
-        painter.setPen(QColor("#cdd6f4"))
+        painter.setPen(QColor("#e2e8f0"))
         title_font = QFont("Segoe UI", 14, QFont.Weight.Bold)
         painter.setFont(title_font)
         painter.drawText(QRectF(0, 10, w, 30), Qt.AlignmentFlag.AlignHCenter, "Small CNN Architecture")
@@ -81,10 +81,10 @@ class NetworkView(QWidget):
             painter.setBrush(QBrush(grad))
             painter.setPen(QPen(base.lighter(130), 1))
             painter.drawRoundedRect(rect, 6, 6)
-            painter.setPen(QColor("#0a0e1a"))
+            painter.setPen(QColor("#101522"))
             painter.setFont(font_name)
             painter.drawText(rect.adjusted(10, 0, -120, 0), Qt.AlignmentFlag.AlignVCenter | Qt.AlignmentFlag.AlignLeft, layer.name)
-            painter.setPen(QColor("#0a0e1a"))
+            painter.setPen(QColor("#101522"))
             painter.setFont(font_shape)
             painter.drawText(rect.adjusted(0, 0, -10, 0), Qt.AlignmentFlag.AlignVCenter | Qt.AlignmentFlag.AlignRight, layer.shape)
         painter.end()

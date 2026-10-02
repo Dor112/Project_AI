@@ -10,11 +10,11 @@ class SettingsPage(QWidget):
         outer = QVBoxLayout(self)
         outer.setContentsMargins(30, 30, 30, 30)
         header = QLabel("System Information")
-        header.setFont(QFont("Segoe UI", 28, QFont.Weight.Bold))
-        header.setStyleSheet("color: #00d4ff;")
+        header.setFont(QFont("Segoe UI", 24, QFont.Weight.Bold))
+        header.setStyleSheet("color: #7dd3fc;")
         outer.addWidget(header)
         sub = QLabel("Информация о системе и оборудовании")
-        sub.setStyleSheet("color: #94a3b8; font-size: 11pt; margin-bottom: 20px;")
+        sub.setStyleSheet("color: #b5c5da; font-size: 11pt; margin-bottom: 20px;")
         outer.addWidget(sub)
         grid = QGridLayout()
         grid.setSpacing(16)
@@ -25,12 +25,13 @@ class SettingsPage(QWidget):
         gpu = get_gpu_info()
         cuda = "Available" if get_cuda_available() else "Unavailable"
         device = "CUDA" if torch.cuda.is_available() else "CPU"
-        cards = [("CPU", cpu_name, "#00d4ff"), ("Logical Threads", str(threads), "#a855f7"), ("RAM", f"{ram:.1f} GB" if ram > 0 else "Unknown", "#22d3ee"), ("GPU", gpu, "#f472b6"), ("CUDA", cuda, "#f59e0b"), ("PyTorch Device", device, "#10b981")]
+        cards = [("CPU", cpu_name, "#7dd3fc"), ("Logical Threads", str(threads), "#b8a1ef"), ("RAM", f"{ram:.1f} GB" if ram > 0 else "Unknown", "#67c9dc"), ("GPU", gpu, "#e5a0bd"), ("CUDA", cuda, "#e9bd75"), ("PyTorch Device", device, "#7ad9b1")]
         for i, (title, value, color) in enumerate(cards):
             card = QFrame()
+            card.setProperty("panel", True)
             card.setStyleSheet(f"""
-                QFrame {{ background-color: qlineargradient(x1:0, y1:0, x2:1, y2:1, stop:0 rgba(15,23,42,0.9), stop:1 rgba(10,14,26,0.9)); border: 1px solid {color}40; border-radius: 14px; }}
-                QFrame:hover {{ border: 1px solid {color}aa; }}
+                QFrame[panel="true"] {{ background-color: qlineargradient(x1:0, y1:0, x2:1, y2:1, stop:0 rgba(25,35,55,0.95), stop:1 rgba(25,35,55,0.95)); border: 1px solid #35445e; border-radius: 14px; }}
+                QFrame[panel="true"]:hover {{ border: 1px solid #35445e; }}
             """)
             card.setMinimumHeight(130)
             layout = QVBoxLayout(card)
@@ -47,8 +48,9 @@ class SettingsPage(QWidget):
             grid.addWidget(card, i // 3, i % 3)
         outer.addStretch()
         info = QFrame()
+        info.setProperty("panel", True)
         info.setStyleSheet("""
-            QFrame { background-color: rgba(0, 212, 255, 0.05); border: 1px solid rgba(0, 212, 255, 0.25); border-radius: 14px; padding: 16px; }
+            QFrame[panel="true"] { background-color: rgba(125, 211, 252, 0.05); border: 1px solid rgba(125, 211, 252, 0.25); border-radius: 14px; padding: 16px; }
         """)
         info_layout = QVBoxLayout(info)
         info_layout.setSpacing(6)
@@ -62,7 +64,7 @@ class SettingsPage(QWidget):
             row = QHBoxLayout()
             t = QLabel(title)
             t.setFont(QFont("Segoe UI", 11, QFont.Weight.Bold))
-            t.setStyleSheet("color: #00d4ff;")
+            t.setStyleSheet("color: #7dd3fc;")
             t.setFixedWidth(140)
             d = QLabel(text)
             d.setStyleSheet("color: #cbd5e1; font-size: 11pt;")

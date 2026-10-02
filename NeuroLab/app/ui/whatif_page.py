@@ -27,19 +27,19 @@ class WhatIfPage(QWidget):
         outer = QVBoxLayout(self)
         outer.setContentsMargins(30, 30, 30, 30)
         header = QLabel("What If?")
-        header.setFont(QFont("Segoe UI", 28, QFont.Weight.Bold))
-        header.setStyleSheet("color: #00d4ff;")
+        header.setFont(QFont("Segoe UI", 24, QFont.Weight.Bold))
+        header.setStyleSheet("color: #7dd3fc;")
         outer.addWidget(header)
         sub = QLabel("Анализ устойчивости модели к изменениям изображения")
-        sub.setStyleSheet("color: #94a3b8; font-size: 11pt; margin-bottom: 16px;")
+        sub.setStyleSheet("color: #b5c5da; font-size: 11pt; margin-bottom: 16px;")
         outer.addWidget(sub)
         ctrl = QHBoxLayout()
         self.btn_load = QPushButton("📁  Load Image")
-        self.btn_load.setStyleSheet(self._btn_style("#00d4ff"))
+        self.btn_load.setStyleSheet(self._btn_style("#7dd3fc"))
         self.btn_load.clicked.connect(self._load_image)
         ctrl.addWidget(self.btn_load)
         self.btn_sample = QPushButton("🎲  Random Sample")
-        self.btn_sample.setStyleSheet(self._btn_style("#a855f7"))
+        self.btn_sample.setStyleSheet(self._btn_style("#b8a1ef"))
         self.btn_sample.clicked.connect(self._random_sample)
         ctrl.addWidget(self.btn_sample)
         ctrl.addStretch()
@@ -49,7 +49,7 @@ class WhatIfPage(QWidget):
         self.transform_buttons = []
         for name, _ in self.transforms:
             btn = QPushButton(name)
-            btn.setStyleSheet(self._btn_style("#f59e0b"))
+            btn.setStyleSheet(self._btn_style("#e9bd75"))
             btn.clicked.connect(lambda checked, n=name: self._apply_transform(n))
             transforms_layout.addWidget(btn)
             self.transform_buttons.append(btn)
@@ -64,14 +64,14 @@ class WhatIfPage(QWidget):
         self.scroll.setWidget(self.container)
         outer.addWidget(self.scroll, 1)
         self.status = QLabel("Загрузите изображение для анализа.")
-        self.status.setStyleSheet("color: #94a3b8; padding-top: 8px;")
+        self.status.setStyleSheet("color: #b5c5da; padding-top: 8px;")
         outer.addWidget(self.status)
 
     @staticmethod
     def _btn_style(color):
         return f"""
-            QPushButton {{ background-color: {color}20; color: {color}; border: 1px solid {color}80; border-radius: 8px; padding: 8px 16px; font-weight: bold; }}
-            QPushButton:hover {{ background-color: {color}40; }}
+            QPushButton {{ background-color: #35445e; color: {color}; border: 1px solid #35445e; border-radius: 8px; padding: 8px 16px; font-weight: bold; }}
+            QPushButton:hover {{ background-color: #35445e; }}
         """
 
     def set_model(self, model):
@@ -143,15 +143,16 @@ class WhatIfPage(QWidget):
 
     def _create_frame(self, name, img):
         frame = QFrame()
+        frame.setProperty("panel", True)
         frame.setStyleSheet("""
-            QFrame { background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(0, 212, 255, 0.2); border-radius: 12px; }
+            QFrame[panel="true"] { background: rgba(25, 35, 55, 0.95); border: 1px solid rgba(125, 211, 252, 0.2); border-radius: 12px; }
         """)
         frame.setFixedWidth(280)
         lay = QVBoxLayout(frame)
         lay.setContentsMargins(12, 12, 12, 12)
         lay.setSpacing(8)
         title = QLabel(name)
-        title.setStyleSheet("color: #a855f7; font-size: 12pt; font-weight: bold;")
+        title.setStyleSheet("color: #b8a1ef; font-size: 12pt; font-weight: bold;")
         title.setAlignment(Qt.AlignmentFlag.AlignCenter)
         lay.addWidget(title)
         display = img.resize((200, 200), Image.BILINEAR)
@@ -167,7 +168,7 @@ class WhatIfPage(QWidget):
         except Exception:
             pred_text = "Error"
         pred_lbl = QLabel(pred_text)
-        pred_lbl.setStyleSheet("color: #00d4ff; font-size: 11pt; font-weight: bold;")
+        pred_lbl.setStyleSheet("color: #7dd3fc; font-size: 11pt; font-weight: bold;")
         pred_lbl.setAlignment(Qt.AlignmentFlag.AlignCenter)
         lay.addWidget(pred_lbl)
         return frame
